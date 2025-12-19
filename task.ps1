@@ -44,14 +44,10 @@ $VMParams = @{
     SecurityGroupName      = $networkSecurityGroupName
     SshKeyName             = $sshKeyName
     PublicIpAddressName    = $publicIpAddressName
+    IdentityType           = SystemAssigned
 }
 
 New-AzVm @VMParams
-
-$vm = Get-AzVM -ResourceGroupName $resourceGroupName -Name $vmName
-$vm.Identity = New-Object Microsoft.Azure.Management.Compute.Models.VirtualMachineIdentity
-$vm.Identity.Type = 'SystemAssigned'
-Update-AzVM -ResourceGroupName $resourceGroupName -VM $vm
 
 Write-Host "Installing the TODO web app..."
 $Params = @{
@@ -74,7 +70,6 @@ $AMAParams = @{
     ExtensionType      = 'AzureMonitorAgent'
     TypeHandlerVersion = 1.38.0
 }
-Set-AzVMExtension @AMAParams
-Add-AzVMExtension @AMAParams
+
 
 Set-AzVMExtension -Name AzureMonitorLinuxAgent -ExtensionType AzureMonitorLinuxAgent -Publisher Microsoft.Azure.Monitor -ResourceGroupName resourceGroupName -VMName vmName -Location location-TypeHandlerVersion '1.38.0' -EnableAutomaticUpgrade $true
