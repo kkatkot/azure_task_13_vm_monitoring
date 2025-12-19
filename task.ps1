@@ -72,4 +72,4 @@ $AMAParams = @{
 }
 
 
-Set-AzVMExtension -Name AzureMonitorLinuxAgent -ExtensionType AzureMonitorLinuxAgent -Publisher Microsoft.Azure.Monitor -ResourceGroupName resourceGroupName -VMName vmName -Location location-TypeHandlerVersion '1.38.0' -EnableAutomaticUpgrade $true
+Set-AzVMExtension @AMAParams
